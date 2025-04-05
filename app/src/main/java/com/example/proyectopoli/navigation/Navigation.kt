@@ -14,7 +14,7 @@ fun ContentNavigation(selectedOption: String) {
         "fotos" -> FotosFragment()
         "videos" -> VideosFragment()
         "web" -> WebFragment()
-        "botones" -> BotonesFragment()
+        "Botones" -> BotonesFragment()
         else -> PerfilFragment()
     }
 }
