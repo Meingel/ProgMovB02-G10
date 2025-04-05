@@ -29,18 +29,18 @@ fun MenuFragment(
     onOptionSelected: (String) -> Unit
 ) {
     val menuItems = listOf(
-        MenuItem(id = "perfil", title = "Perfil", icon = Icons.Default.AccountCircle),
-        MenuItem(id = "fotos", title = "Fotos", icon = Icons.Default.Image),
-        MenuItem(id = "videos", title = "Videos", icon = Icons.Default.Videocam),
-        MenuItem(id = "web", title = "Web", icon = Icons.Default.Language),
-        MenuItem(id = "botones", title = "Botones", icon = Icons.Default.RadioButtonChecked)
+        MenuItem(id = "Perfil", title = "Perfil", icon = Icons.Default.AccountCircle),
+        MenuItem(id = "Fotos", title = "Fotos", icon = Icons.Default.Image),
+        MenuItem(id = "Videos", title = "Videos", icon = Icons.Default.Videocam),
+        MenuItem(id = "Web", title = "Web", icon = Icons.Default.Language),
+        MenuItem(id = "Botones", title = "Botones", icon = Icons.Default.RadioButtonChecked)
     )
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
-            text = "ProyectoPOLI",
+            text = "Dashboard",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
