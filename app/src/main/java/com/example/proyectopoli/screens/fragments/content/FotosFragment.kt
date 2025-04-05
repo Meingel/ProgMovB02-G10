@@ -20,7 +20,7 @@ fun FotosFragment() {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Se ha seleccionado la opción Fotos",
+            text = "Se ha seleccionado la opción Fotossss",
             style = MaterialTheme.typography.headlineMedium,
             textAlign = TextAlign.Center
         )
