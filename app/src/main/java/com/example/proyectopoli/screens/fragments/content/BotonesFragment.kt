@@ -1,76 +1,127 @@
-package com.example.proyectopoli.screens.fragments.content // Nombre del paquete, ajusta si moviste el archivo
+package com.example.proyectopoli.screens.fragments.content
 
-// Importaciones necesarias para diseño y comportamiento con Jetpack Compose
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.material.icons.automirrored.filled.ArrowBack // Para que la flecha se adapte al idioma
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavController
 
-@OptIn(ExperimentalMaterial3Api::class) // Permite usar componentes experimentales como TopAppBar
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BotonesFragment() {
-    // Scaffold es un layout base que contiene elementos como barra superior
+fun BotonesFragment(navController: NavController, onBack: () -> Unit) {
+    // Lista de pares con texto e ícono
+    val botonesConIconos = listOf(
+        "Agendar Tarea" to Icons.Default.Add,
+        "Editar Tarea" to Icons.Default.Edit,
+        "Calendario" to Icons.Default.CalendarToday,
+        "Equipos" to Icons.Default.Group,
+        "Historial" to Icons.Default.History
+    )
+
     Scaffold(
         topBar = {
-            // Barra superior con título centrado
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = "Gestionar Tareas", // Título que se muestra
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                },
-                navigationIcon = {
-                    // Botón con ícono de volver (aún sin funcionalidad)
-                    IconButton(onClick = { /* acción para volver */ }) {
+            Surface(
+                color = Color(0xFFFFD54F),
+                shadowElevation = 4.dp
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp, vertical = 5.dp)
+                ) {
+                    IconButton(onClick = { onBack() }) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack, // Flecha adaptativa (LTR o RTL)
-                            contentDescription = "Volver"
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Volver",
+                            tint = Color.Black
                         )
                     }
+                    Text(
+                        text = "Gestionar Tareas",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.weight(1f)
+                    )
+                    Spacer(modifier = Modifier.width(48.dp))
                 }
-            )
+            }
         },
         content = { padding ->
-            // Cuerpo de la pantalla con espaciado y alineación
-            Column(
+            Box(
                 modifier = Modifier
-                    .fillMaxSize() // Ocupar todo el alto y ancho posible
-                    .padding(padding) // Padding automático del Scaffold
-                    .padding(16.dp), // Padding adicional
-                verticalArrangement = Arrangement.spacedBy(16.dp), // Espacio entre tarjetas
-                horizontalAlignment = Alignment.CenterHorizontally // Centrar horizontalmente
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(horizontal = 16.dp),
+                contentAlignment = Alignment.TopCenter
             ) {
-                // Lista de botones que se mostrarán como tarjetas
-                listOf("Agendar Tarea", "Editar Tarea", "Calendario", "Equipos", "Historial").forEach { texto ->
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth() // Ocupar todo el ancho
-                            .clickable { /* acción según texto */ }, // Aún sin acción implementada
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFFE0E0E0)), // Color gris claro
-                        shape = RoundedCornerShape(12.dp) // Bordes redondeados
-                    ) {
-                        Box(
-                            contentAlignment = Alignment.Center, // Centrar contenido dentro de la tarjeta
-                            modifier = Modifier.padding(24.dp) // Padding interno
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 100.dp),
+                    verticalArrangement = Arrangement.spacedBy(28.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    botonesConIconos.chunked(2).forEach { fila ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(28.dp, Alignment.CenterHorizontally),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                text = texto, // Texto de la tarjeta
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Medium
-                            )
+                            fila.forEach { (texto, icono) ->
+                                Card(
+                                    modifier = Modifier
+                                        .width(180.dp)
+                                        .height(120.dp) // más largas para acomodar ícono y texto
+                                        .clickable { /* Acción aquí */ },
+                                    colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF8E1)),
+                                    shape = RoundedCornerShape(12.dp)
+                                ) {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(12.dp),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        Icon(
+                                            imageVector = icono,
+                                            contentDescription = texto,
+                                            tint = Color(0xFF616161),
+                                            modifier = Modifier.size(32.dp)
+                                        )
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        Text(
+                                            text = texto,
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Medium,
+                                            color = Color.Black,
+                                            textAlign = TextAlign.Center
+                                        )
+                                    }
+                                }
+                            }
+                            if (fila.size == 1) {
+                                Spacer(modifier = Modifier.width(180.dp))
+                            }
                         }
                     }
+
+                    Spacer(modifier = Modifier.height(60.dp))
                 }
             }
         }
