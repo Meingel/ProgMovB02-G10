@@ -15,11 +15,13 @@ fun ContentNavigation(
     onBack: () -> Unit // ← AGREGA ESTE PARÁMETRO
 ) {
     when (selectedOption) {
-        "perfil" -> PerfilFragment()
-        "fotos" -> FotosFragment()
-        "videos" -> VideosFragment()
-        "Web" -> WebFragment(navController = navController,onBack = onBack)
+
+        "Perfil" -> PerfilFragment(navController = navController, onBack = onBack)
+        "Fotos" -> FotosFragment()
+        "Videos" -> VideosFragment()
+        "Web" -> WebFragment()
         "Botones" -> BotonesFragment(navController = navController, onBack = onBack) // ← PASA onBack
-        else -> PerfilFragment()
+         else -> PerfilFragment(navController = navController, onBack = onBack)
+
     }
 }
