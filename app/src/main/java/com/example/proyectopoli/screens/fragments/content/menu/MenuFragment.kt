@@ -37,17 +37,15 @@ fun MenuFragment(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .width(225.dp) // M
+            .width(225.dp)
             .background(Color(0xFFFFD54F)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(80.dp))
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(24.dp),
+            verticalArrangement = Arrangement.spacedBy(32.dp),
             modifier = Modifier.padding(top = 8.dp)
         ) {
             items(menuItems) { item ->
@@ -61,13 +59,13 @@ fun MenuFragment(
                         imageVector = item.icon,
                         contentDescription = item.title,
                         tint = Color.Black,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(55.dp) // Más grande
                     )
                     Text(
                         text = item.title,
-                        color = Color.White,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Normal,
+                        color = Color.Black, // Cambiado a negro
+                        fontSize = 20.sp, // Tamaño un poquito mayor
+                        fontWeight = FontWeight.Medium,
                         modifier = Modifier.padding(top = 4.dp)
                     )
                 }

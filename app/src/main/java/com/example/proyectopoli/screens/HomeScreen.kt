@@ -1,5 +1,6 @@
 package com.example.proyectopoli.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -17,7 +18,6 @@ import com.example.proyectopoli.navigation.ContentNavigation
 import com.example.proyectopoli.screens.fragments.content.menu.MenuFragment
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -28,14 +28,24 @@ fun HomeScreen() {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet {
-                MenuFragment(
-                    selectedOption = selectedOption,
-                    onOptionSelected = { option ->
-                        selectedOption = option
-                        scope.launch { drawerState.close() }
-                    }
-                )
+            ModalDrawerSheet(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(225.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color(0xFFFFD54F))
+                ) {
+                    MenuFragment(
+                        selectedOption = selectedOption,
+                        onOptionSelected = { option ->
+                            selectedOption = option
+                            scope.launch { drawerState.close() }
+                        }
+                    )
+                }
             }
         }
     ) {
@@ -68,7 +78,7 @@ fun HomeScreen() {
                         }
                         Text(
                             text = "Gestor de tareas personales",
-                            fontSize = 20.sp,
+                            fontSize = 22.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.Black,
                             textAlign = TextAlign.Center,

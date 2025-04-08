@@ -14,7 +14,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.material.icons.Icons
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.compose.foundation.background
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,6 +48,8 @@ fun WebFragment(navController: NavController, onBack: () -> Unit) {
                     }
                     Text(
                         text = "Navegador Web",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.headlineMedium,
                         color = Color.Black, // Texto negro
                         modifier = Modifier.weight(1f),
@@ -56,6 +62,7 @@ fun WebFragment(navController: NavController, onBack: () -> Unit) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    .background(Color(0xFF2C2C2C)) // Fondo oscuro
                     .padding(paddingValues)
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
