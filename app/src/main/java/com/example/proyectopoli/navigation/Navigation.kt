@@ -15,6 +15,7 @@ fun ContentNavigation(
     onBack: () -> Unit // ← AGREGA ESTE PARÁMETRO
 ) {
     when (selectedOption) {
+
         "Perfil" -> PerfilFragment(navController = navController, onBack = onBack)
         "Fotos" -> FotosFragment()
         "Videos" -> VideosFragment()
