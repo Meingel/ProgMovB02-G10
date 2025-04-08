@@ -1,27 +1,26 @@
 package com.example.proyectopoli.screens.fragments.content
 
 import androidx.compose.material.icons.filled.ArrowBack
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.material.icons.Icons
 import androidx.navigation.NavController
 
-
 @Composable
 fun WebFragment(navController: NavController, onBack: () -> Unit) {
-    // Estado para la URL ingresada
+    // Estado para la URL actual y el texto en el cuadro de entrada
     var url by remember { mutableStateOf("https://www.google.com") }
+    var textFieldValue by remember { mutableStateOf(url) }
 
     Scaffold(
         topBar = {
@@ -61,32 +60,49 @@ fun WebFragment(navController: NavController, onBack: () -> Unit) {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 // Cuadro de texto para ingresar la URL
-                var textFieldValue by remember { mutableStateOf(TextFieldValue(url)) }
-                BasicTextField(
+                TextField(
                     value = textFieldValue,
                     onValueChange = { newValue -> textFieldValue = newValue },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                        .height(50.dp),
-                    textStyle = LocalTextStyle.current.copy(color = Color.Black)
+                    label = { Text("Ingresa una URL") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
                 )
 
                 // Botón para cargar la página
                 Button(
-                    onClick = { url = textFieldValue.text },
+                    onClick = {
+                        // Validar y actualizar la URL
+                        val processedUrl = if (textFieldValue.startsWith("http://") || textFieldValue.startsWith("https://")) {
+                            textFieldValue
+                        } else {
+                            "https://$textFieldValue" // Agrega "https://" si falta
+                        }
+                        url = processedUrl
+                    },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "Cargar Página")
+                    Text("Cargar Página")
                 }
 
-                // WebView para mostrar la página cargada
-                AndroidView(factory = { context ->
-                    WebView(context).apply {
-                        webViewClient = WebViewClient()
-                        loadUrl(url)
-                    }
-                }, modifier = Modifier.fillMaxSize())
+                // WebView que carga la URL
+
+                AndroidView(
+                    factory = { context ->
+                        WebView(context).apply {
+                            webViewClient = WebViewClient()
+                            settings.apply {
+                                javaScriptEnabled = true
+                                domStorageEnabled = true
+                                cacheMode = WebSettings.LOAD_NO_CACHE
+                            }
+                        }
+                    },
+                    update = { webView ->
+                        webView.loadUrl(url)
+                    },
+                    modifier = Modifier.fillMaxSize()
+                )
+
             }
         }
     )
