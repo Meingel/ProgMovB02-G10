@@ -30,7 +30,7 @@ fun WebFragment(navController: NavController, onBack: () -> Unit) {
     Scaffold(
         topBar = {
             Surface(
-                color = Color(0xFFFFC107), // Amarillo vibrante como en tu app
+                color = Color(0xFFFFC107),
                 shadowElevation = 4.dp
             ) {
                 Row(
@@ -62,7 +62,6 @@ fun WebFragment(navController: NavController, onBack: () -> Unit) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFF2C2C2C)) // Fondo oscuro
                     .padding(paddingValues)
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
