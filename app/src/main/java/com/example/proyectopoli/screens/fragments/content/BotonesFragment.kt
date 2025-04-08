@@ -21,7 +21,6 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BotonesFragment(navController: NavController, onBack: () -> Unit) {
-    // Lista de pares con texto e ícono
     val botonesConIconos = listOf(
         "Agendar Tarea" to Icons.Default.Add,
         "Editar Tarea" to Icons.Default.Edit,
@@ -51,7 +50,7 @@ fun BotonesFragment(navController: NavController, onBack: () -> Unit) {
                     }
                     Text(
                         text = "Gestionar Tareas",
-                        fontSize = 24.sp,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
                         textAlign = TextAlign.Center,
@@ -62,66 +61,72 @@ fun BotonesFragment(navController: NavController, onBack: () -> Unit) {
             }
         },
         content = { padding ->
-            Box(
+            Surface(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding)
-                    .padding(horizontal = 16.dp),
-                contentAlignment = Alignment.TopCenter
+                    .padding(padding),
+                color = Color(0xFF2C2C2C) // Color de fondo oscuro
             ) {
-                Column(
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 100.dp),
-                    verticalArrangement = Arrangement.spacedBy(28.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp),
+                    contentAlignment = Alignment.TopCenter
                 ) {
-                    botonesConIconos.chunked(2).forEach { fila ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(28.dp, Alignment.CenterHorizontally),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            fila.forEach { (texto, icono) ->
-                                Card(
-                                    modifier = Modifier
-                                        .width(180.dp)
-                                        .height(120.dp) // más largas para acomodar ícono y texto
-                                        .clickable { /* Acción aquí */ },
-                                    colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF8E1)),
-                                    shape = RoundedCornerShape(12.dp)
-                                ) {
-                                    Column(
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 100.dp),
+                        verticalArrangement = Arrangement.spacedBy(28.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        botonesConIconos.chunked(2).forEach { fila ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(28.dp, Alignment.CenterHorizontally),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                fila.forEach { (texto, icono) ->
+                                    Card(
                                         modifier = Modifier
-                                            .fillMaxSize()
-                                            .padding(12.dp),
-                                        verticalArrangement = Arrangement.Center,
-                                        horizontalAlignment = Alignment.CenterHorizontally
+                                            .width(180.dp)
+                                            .height(120.dp)
+                                            .clickable { /* Acción aquí */ },
+                                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFD54F)),
+                                        shape = RoundedCornerShape(12.dp)
                                     ) {
-                                        Icon(
-                                            imageVector = icono,
-                                            contentDescription = texto,
-                                            tint = Color(0xFF616161),
-                                            modifier = Modifier.size(32.dp)
-                                        )
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                        Text(
-                                            text = texto,
-                                            fontSize = 16.sp,
-                                            fontWeight = FontWeight.Medium,
-                                            color = Color.Black,
-                                            textAlign = TextAlign.Center
-                                        )
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .padding(12.dp),
+                                            verticalArrangement = Arrangement.Center,
+                                            horizontalAlignment = Alignment.CenterHorizontally
+                                        ) {
+                                            Icon(
+                                                imageVector = icono,
+                                                contentDescription = texto,
+                                                tint = Color(0xFF616161),
+                                                modifier = Modifier.size(32.dp)
+                                            )
+                                            Spacer(modifier = Modifier.height(8.dp))
+                                            Text(
+                                                text = texto,
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Medium,
+                                                color = Color.Black,
+                                                textAlign = TextAlign.Center
+                                            )
+                                        }
                                     }
                                 }
-                            }
-                            if (fila.size == 1) {
-                                Spacer(modifier = Modifier.width(180.dp))
+                                if (fila.size == 1) {
+                                    Spacer(modifier = Modifier.width(180.dp))
+                                }
                             }
                         }
-                    }
 
-                    Spacer(modifier = Modifier.height(60.dp))
+                        Spacer(modifier = Modifier.height(60.dp))
+                    }
                 }
             }
         }

@@ -68,7 +68,7 @@ fun HomeScreen() {
                         }
                         Text(
                             text = "Gestor de tareas personales",
-                            fontSize = 20.sp,
+                            fontSize = 22.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.Black,
                             textAlign = TextAlign.Center,
@@ -94,3 +94,5 @@ fun HomeScreen() {
         }
     }
 }
+
+

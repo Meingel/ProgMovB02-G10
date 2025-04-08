@@ -42,8 +42,10 @@ fun PerfilFragment(navController: NavController, onBack: () -> Unit) {
                     Text(
                         text = "Información de usuario",
                         fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
                         color = Color.Black,
-                        modifier = Modifier.padding(start = 8.dp)
+                        modifier = Modifier.fillMaxWidth()
+                            .wrapContentWidth(Alignment.CenterHorizontally)
                     )
                 }
             }
