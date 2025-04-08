@@ -18,7 +18,7 @@ fun ContentNavigation(
         "perfil" -> PerfilFragment()
         "fotos" -> FotosFragment()
         "videos" -> VideosFragment()
-        "web" -> WebFragment()
+        "Web" -> WebFragment(navController = navController,onBack = onBack)
         "Botones" -> BotonesFragment(navController = navController, onBack = onBack) // ← PASA onBack
         else -> PerfilFragment()
     }
