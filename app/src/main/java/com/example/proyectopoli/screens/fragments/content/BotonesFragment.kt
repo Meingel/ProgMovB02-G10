@@ -14,13 +14,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BotonesFragment(navController: NavController, onBack: () -> Unit) {
+fun BotonesFragment(navController: NavController, onBack: () -> Unit, onOptionSelected: (String) -> Unit) {
     val botonesConIconos = listOf(
         "Agendar Tarea" to Icons.Default.Add,
         "Editar Tarea" to Icons.Default.Edit,
@@ -65,7 +67,7 @@ fun BotonesFragment(navController: NavController, onBack: () -> Unit) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding),
-                color = Color(0xFF2C2C2C) // Color de fondo oscuro
+                color = Color(0xFF2C2C2C)
             ) {
                 Box(
                     modifier = Modifier
@@ -91,7 +93,15 @@ fun BotonesFragment(navController: NavController, onBack: () -> Unit) {
                                         modifier = Modifier
                                             .width(180.dp)
                                             .height(120.dp)
-                                            .clickable { /* Acción aquí */ },
+                                            .clickable {
+                                                when (texto)  {
+                                                "Agendar Tarea" -> onOptionSelected("Agendar Tarea")
+                                                "Editar Tarea" -> onOptionSelected("Editar Tarea")
+                                                "Calendario" -> onOptionSelected("Calendario")
+                                                "Equipos" -> onOptionSelected("Equipos")
+                                                "Historial" -> onOptionSelected("Historial")
+                                            }
+                                            },
                                         colors = CardDefaults.cardColors(containerColor = Color(0xFFFFD54F)),
                                         shape = RoundedCornerShape(12.dp)
                                     ) {

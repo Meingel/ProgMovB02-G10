@@ -98,7 +98,8 @@ fun HomeScreen() {
                 ContentNavigation(
                     selectedOption = selectedOption,
                     navController = navController,
-                    onBack = { selectedOption = "Perfil" }
+                    onBack = { selectedOption = "Perfil" },
+
                 )
             }
         }
