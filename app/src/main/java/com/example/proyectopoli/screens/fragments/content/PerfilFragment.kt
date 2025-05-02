@@ -8,7 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,10 +16,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.compose.foundation.clickable
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PerfilFragment(navController: NavController, onBack: () -> Unit) {
+    var showEstudiosDialog by remember { mutableStateOf(false) }
+    var showTareasDialog by remember { mutableStateOf(false) }
+    var showStatsDialog by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             Surface(
@@ -44,7 +50,8 @@ fun PerfilFragment(navController: NavController, onBack: () -> Unit) {
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .wrapContentWidth(Alignment.CenterHorizontally)
                     )
                 }
@@ -52,16 +59,14 @@ fun PerfilFragment(navController: NavController, onBack: () -> Unit) {
             Spacer(modifier = Modifier.width(16.dp))
         }
 
-    )
-
-    { paddingValues ->
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color(0xFF2C2C2C))
                 .padding(paddingValues)
                 .padding(horizontal = 16.dp)
-                .padding(top = 16.dp, bottom = 24.dp), // menor padding inferior
+                .padding(top = 16.dp, bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
 
@@ -85,13 +90,15 @@ fun PerfilFragment(navController: NavController, onBack: () -> Unit) {
                     Text("Estudiante de Ingeniería de Software", color = Color.White, fontSize = 13.sp)
                 }
             }
-            Spacer(modifier = Modifier.width(16.dp))
-            Spacer(modifier = Modifier.width(16.dp))
+
             // --- Estadísticas ---
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Card(
+                    onClick = { showEstudiosDialog = true },
                     colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
-                    modifier = Modifier.weight(1f).padding(end = 8.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp)
                 ) {
                     Column(
                         modifier = Modifier.padding(20.dp),
@@ -101,30 +108,32 @@ fun PerfilFragment(navController: NavController, onBack: () -> Unit) {
                         Text("2", color = Color(0xFFFFD54F), fontSize = 20.sp)
                     }
                 }
+
                 Card(
+                    onClick = { showStatsDialog = true },
                     colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
-                    modifier = Modifier.weight(1f).padding(end = 20.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 20.dp)
                 ) {
                     Column(
                         modifier = Modifier.padding(20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text("Estadisticas", color = Color.White, fontSize = 20.sp)
+                        Text("Estadísticas", color = Color.White, fontSize = 20.sp)
                         Text("", color = Color.White, fontSize = 20.sp)
                         Text("2/10 tareas", color = Color(0xFFFFD54F), fontSize = 20.sp)
                     }
                 }
-
-
             }
-            Spacer(modifier = Modifier.width(16.dp))
-            Spacer(modifier = Modifier.width(16.dp))
+
             // --- Tareas pendientes ---
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color(0xFF3A3A3A), RoundedCornerShape(20.dp))
                     .padding(12.dp)
+                    .clickable { showTareasDialog = true } // ← Clickable completo
             ) {
                 Text("Tareas pendientes", color = Color.White, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(14.dp))
@@ -151,8 +160,6 @@ fun PerfilFragment(navController: NavController, onBack: () -> Unit) {
             }
 
             // --- Productividad y Tiempo ---
-            Spacer(modifier = Modifier.width(16.dp))
-            Spacer(modifier = Modifier.width(16.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(20.dp)
@@ -177,6 +184,68 @@ fun PerfilFragment(navController: NavController, onBack: () -> Unit) {
                     Text("Mes actual", fontSize = 20.sp)
                 }
             }
+        }
+
+        // --- Diálogo: Estudios registrados ---
+        if (showEstudiosDialog) {
+            AlertDialog(
+                onDismissRequest = { showEstudiosDialog = false },
+                confirmButton = {
+                    TextButton(onClick = { showEstudiosDialog = false }) {
+                        Text("Cerrar")
+                    }
+                },
+                title = { Text("Estudios registrados") },
+                text = {
+                    Column {
+                        Text("1. Introducción a Kotlin")
+                        Text("2. Arquitectura MVVM")
+                        Text("3. Jetpack Compose avanzado")
+                    }
+                }
+            )
+        }
+
+        // --- Diálogo: Tareas pendientes ---
+        if (showTareasDialog) {
+            AlertDialog(
+                onDismissRequest = { showTareasDialog = false },
+                confirmButton = {
+                    TextButton(onClick = { showTareasDialog = false }) {
+                        Text("Cerrar")
+                    }
+                },
+                title = { Text("Tareas pendientes") },
+                text = {
+                    Column {
+                        Text("✔ Estudiar - 14/03/2025")
+                        Text("✔ Leer libro - 14/03/2025")
+                        Text("⏳ Hacer aseo - 14/03/2025")
+                        Text("Total: 3 de 10 completadas")
+                    }
+                }
+            )
+        }
+
+        // --- Diálogo: Estadísticas ---
+        if (showStatsDialog) {
+            AlertDialog(
+                onDismissRequest = { showStatsDialog = false },
+                confirmButton = {
+                    TextButton(onClick = { showStatsDialog = false }) {
+                        Text("Cerrar")
+                    }
+                },
+                title = { Text("Estadísticas") },
+                text = {
+                    Column {
+                        Text("Tareas completadas: 2")
+                        Text("Tareas totales: 10")
+                        Text("Progreso: 20%")
+                        Text("Última actualización: 01/05/2025")
+                    }
+                }
+            )
         }
     }
 }
