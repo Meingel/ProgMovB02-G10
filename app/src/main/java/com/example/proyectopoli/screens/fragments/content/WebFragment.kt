@@ -43,7 +43,7 @@ fun WebFragment(navController: NavController, onBack: () -> Unit) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Volver",
-                            tint = Color.Black // Negro como en tu app
+                            tint = Color.Black
                         )
                     }
                     Text(
@@ -91,7 +91,7 @@ fun WebFragment(navController: NavController, onBack: () -> Unit) {
                         val processedUrl = if (textFieldValue.startsWith("http://") || textFieldValue.startsWith("https://")) {
                             textFieldValue
                         } else {
-                            "https://$textFieldValue" // Agrega "https://" si falta
+                            "https://$textFieldValue"
                         }
                         url = processedUrl
                     },
